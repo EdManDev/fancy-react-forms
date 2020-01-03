@@ -1,98 +1,27 @@
-import React, { Component } from 'react';
-import {
-  Container, Col, Form,
-  FormGroup, Label, Input,
-  Button, FormText, FormFeedback,
-} from 'reactstrap';
-import './App.css';
+import React, { Component } from "react";
+import { Route, Switch, Link } from "react-router-dom";
 
-class App extends Component {
-  constructor(props) {
-    super(props);
-      this.state = {
-      'email': '',
-      'password': '',
-      validate: {
-        emailState: '',
-      },
-    }
-    this.handleChange = this.handleChange.bind(this);
-  }
+import Login from "./auth/Login";
+import Register from "./auth/Register";
+import Forget from "./auth/Forget";
+import Confirm from "./auth/Confirm";
 
-  validateEmail(e) {
-    const emailRex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    const { validate } = this.state
-      if (emailRex.test(e.target.value)) {
-        validate.emailState = 'has-success'
-      } else {
-        validate.emailState = 'has-danger'
-      }
-      this.setState({ validate })
-    }
-
-  handleChange = async (event) => {
-    const { target } = event;
-    const value = target.type === 'checkbox' ? target.checked : target.value;
-    const { name } = target;
-    await this.setState({
-      [ name ]: value,
-    });
-  }
-
-  submitForm(e) {
-    e.preventDefault();
-    console.log(`Email: ${ this.state.email }`)
-  }
-
+export default class App extends Component {
   render() {
-    const { email, password } = this.state;
     return (
-      <Container className="App">
-        <h2>Sign In</h2>
-        <Form className="form" onSubmit={ (e) => this.submitForm(e) }>
-          <Col>
-            <FormGroup>
-              <Label>Username</Label>
-              <Input
-                type="email"
-                name="email"
-                id="exampleEmail"
-                placeholder="myemail@email.com"
-                value={ email }
-                valid={ this.state.validate.emailState === 'has-success' }
-                invalid={ this.state.validate.emailState === 'has-danger' }
-                onChange={ (e) => {
-                            this.validateEmail(e)
-                            this.handleChange(e)
-                          } }
-              />
-              <FormFeedback valid>
-                That's a tasty looking email you've got there.
-              </FormFeedback>
-              <FormFeedback>
-                Uh oh! Looks like there is an issue with your email. Please input a correct email.
-              </FormFeedback>
-              <FormText>Your username is most likely your email.</FormText>
-            </FormGroup>
-          </Col>
-          <Col>
-            <FormGroup>
-              <Label for="examplePassword">Password</Label>
-              <Input
-                type="password"
-                name="password"
-                id="examplePassword"
-                placeholder="********"
-                value={ password }
-                onChange={ (e) => this.handleChange(e) }
-            />
-            </FormGroup>
-          </Col>
-          <Button>Submit</Button>
-      </Form>
-      </Container>
+      <div>
+        <h1>you are not ashamed you stole my project</h1>
+        <h1>tu n'as pas honte tu as volé mon projet</h1>
+        <h1>no te avergüenzas de haber robado mi proyecto</h1>
+        <Link to="/login">Login</Link>
+        <Link to="/register">Register</Link>
+        <Switch>
+          <Route path="/login" component={Login} />
+          <Route path="/register" component={Register} />
+          <Route path="/forget" component={Forget} />
+          <Route path="/confirm" component={Confirm} />
+        </Switch>
+      </div>
     );
   }
 }
-
-export default App;
